@@ -1,23 +1,32 @@
 import Loading from "@/components/units/Loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { getCsrfToken, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 import { useRouter } from "next/router";
 export default function Page() {
-  const router = useRouter();
-  const { data: session } = useSession();
-
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  if (status === "loading") return <Loading />;
+  if (!session) {
+    router.replace("/login");
+    console.log("session", session);
+  }
+
   const userId = queryClient.getQueryData(["userId"]);
   console.log("userId - 메인으로 이동한 상태 ", userId);
 
   const { data, error, isLoading } = useQuery(["userId"], async () => {
+    const session = await getSession();
+
+    console.log("session", session);
+    const accessToken = session?.accessToken;
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/user/main/${userId}`,
       {
         headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         userId: userId,
       }

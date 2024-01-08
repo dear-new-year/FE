@@ -5,7 +5,7 @@ import { OverlayProvider } from "@toss/use-overlay";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Head from "next/head";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import RefreshTokenHandler from "../features/auth/RefreshTokenHandler";
 import { NextComponentType, NextPageContext } from "next";
 import AuthContainer from "@/auth/AuthContainer";
@@ -27,7 +27,7 @@ interface MyAppProps extends AppProps {
   Component: NextComponentWithAuth;
 }
 
-const ALLOWED_ONLY_FOR_MEMBERS = ["/newalbum", "/collection", "/main"];
+const ALLOWED_ONLY_FOR_MEMBERS = ["/logi"];
 
 export const queryClient = new QueryClient();
 
@@ -37,13 +37,14 @@ export const QueryClientWrapper = ({ children }: any) => (
 
 export default function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: {  ...pageProps },
   router: { route },
 }: MyAppProps) {
   const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000);
   const memberRequireAuth = ALLOWED_ONLY_FOR_MEMBERS.some((path) =>
     route.startsWith(path)
   );
+  // const session = 
 
   const renerAuthorizedComponent = () => {
     if (memberRequireAuth) {
@@ -77,12 +78,12 @@ export default function MyApp({
         session={pageProps.session}
         refetchInterval={sessionRefetchInterval}
       >
-        <QueryClientWrapper>
+        <QueryClientProvider client={queryClient}>
           <OverlayProvider>{renerAuthorizedComponent()}</OverlayProvider>
           <RefreshTokenHandler
             setSessionRefetchInterval={setSessionRefetchInterval}
           />
-        </QueryClientWrapper>
+        </QueryClientProvider>
       </SessionProvider>
     </>
   );

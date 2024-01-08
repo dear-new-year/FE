@@ -23,6 +23,7 @@
     "axios": "^1.6.2",
     "cookie-parser": "^1.4.6",
     "cookies": "^0.8.0",
+    "cookies-next": "^4.1.0",
     "dotenv": "^16.3.1",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",

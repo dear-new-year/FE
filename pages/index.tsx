@@ -1,18 +1,20 @@
+import { useKakaoLogin } from "@/hooks/useKakaoLogin";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleKakaoLogin = async () => {
-    try {
-      await signIn("kakao", {
-        callbackUrl: `${window.location.origin}/login/redirect`,
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  // const handleKakaoLogin = async () => {
+  //   try {
+  //     await signIn("kakao", {
+  //       callbackUrl: `${window.location.origin}/login/redirect`,
+  //     });
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
+  useKakaoLogin();
 
   return (
     <>
@@ -26,7 +28,8 @@ export default function Home() {
         </div>
 
         <button
-          onClick={() => handleKakaoLogin()}
+          // onClick={() => handleKakaoLogin()}
+          onClick={() => signIn("kakao", { callbackUrl: "/login/redirect" })}
           className="bg-[#FAE100] 
           rounded-md text-center w-64 max-w-sm h-10 p-2 px-4 flex items-center"
         >

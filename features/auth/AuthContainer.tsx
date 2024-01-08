@@ -13,23 +13,24 @@ const AuthContainer = ({ children, authInfo }: Props) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const isUser = !!session?.user;
+  const accessToken = session?.accessToken;
 
   const redirect = authInfo?.redirect || "/";
-  const role = authInfo.role;
-  const loading = authInfo?.loading || <div>Loading</div>;
+  const loading = authInfo?.loading || <Loading />;
 
   useEffect(() => {
     if (status === "loading") return;
+
     if (!isUser) {
-      router.push(redirect);
+      router.replace("/login");
     }
   }, [isUser, status]);
 
-  if (isUser) {
-    return children;
+  if (isUser && accessToken) {
+    return <>{children}</>;
   }
 
-  return <Loading />;
+  return loading;
 };
 
 export default AuthContainer;

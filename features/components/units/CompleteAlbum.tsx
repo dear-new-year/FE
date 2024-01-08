@@ -8,14 +8,17 @@ import { useModal } from "../common/ShareModal";
 import BackgroundColorful from "./BackSelect-Animation/BackgroundColorful";
 import BackgroundSnow from "./BackSelect-Animation/BackgroundSnow";
 import BackgroundCircles from "./BackSelect-Animation/BackgroundCircles";
+import axios from "axios";
+import { getSession, useSession } from "next-auth/react";
 
 interface CompletedAlbumProps {
   submittedAlbum: {
     editor: string;
     phrases: string;
     back: string;
-    music: {
+    musicInfo: {
       id: number;
+      youtubeUrlId: string;
       name: string;
       artist: string;
       thumbnail: string;
@@ -70,8 +73,40 @@ const CompleteAlbum: React.FC<CompletedAlbumProps> = ({ submittedAlbum }) => {
   });
 
   const onClickModal = async () => {
-    const result = await open();
-    if (result) await open();
+    const result = await sendAlbumData();
+    open();
+  };
+
+  const sendAlbumData = async () => {
+    try {
+      const session = await getSession();
+      console.log(session);
+      const accessToken = session?.accessToken;
+      console.log("세션 액세스 토큰 잘 불러옴?", accessToken);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/album/send`,
+        {
+          albumInfo: {
+            albumBackground: submittedAlbum.back,
+            albumCover: submittedAlbum.editor,
+            albumPhrases: submittedAlbum.phrases,
+            fromName: submittedAlbum.from,
+            letter: submittedAlbum.letter,
+            musicId: submittedAlbum.musicInfo.youtubeUrlId,
+            toName: submittedAlbum.to,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.log("앨범보내기 실패에러", err);
+    }
   };
 
   return (
