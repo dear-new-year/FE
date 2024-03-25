@@ -1,7 +1,10 @@
 import axios from "axios";
+import Image from "next/image";
 
 import { useRouter } from "next/router";
 import React from "react";
+
+import pin from "features/assets/lp/lp-pin.svg";
 
 interface PreivewInfoProps {
   submittedData: {
@@ -99,8 +102,8 @@ const PreivewInfo: React.FC<PreivewInfoProps> = ({
           className="absolute top-[35%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 animate-bounce w-[90px] h-[90px]
           "
         />
-        <img
-          src="/assets/lp/lp-pin.svg"
+        <Image
+          src={pin}
           alt="lp-pin"
           className="absolute top-[40%] left-[65%] w-[100px] h-[160px]"
         />

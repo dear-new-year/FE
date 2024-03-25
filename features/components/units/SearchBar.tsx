@@ -1,3 +1,6 @@
+import Image from "next/image";
+import search from "@/assets/icons/search.svg";
+
 interface SearchBarProps {
   onSearch: (keyword: string) => void;
 }
@@ -20,8 +23,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="가수/제목 검색"
         onChange={handleInputChange}
       />
-      <img
-        src="/assets/icons/search.svg"
+      <Image
+        src={search}
         alt="search"
         className="w-4 h-4 
       "

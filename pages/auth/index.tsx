@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Loading from "@/components/units/Loading";
 
 export default function RedirectPage() {
   const router = useRouter();
@@ -69,5 +70,5 @@ export default function RedirectPage() {
     }
   }, [router]);
 
-  return <div>Redirecting...</div>;
+  return <Loading />;
 }

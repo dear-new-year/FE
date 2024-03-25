@@ -1,12 +1,18 @@
-import { set, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import { infoSvg, playListButton, tapButton } from "../features/utils/data";
 import Inputlabel from "@/components/common/InputLabel";
 import Input from "@/components/common/Input";
 import RoundRadioButton from "@/components/common/RoundRadioButton";
+import BorderRadioButton from "@/components/common/BorderRadioButton";
 import PreivewInfo from "@/components/units/PreviewInfo";
-import { useRouter } from "next/router";
+
+import headphone from "../features/assets/headphone.svg";
+import wtl from "../features/assets/wtl.svg";
+import high from "../features/assets/high.svg";
+import low from "../features/assets/low.svg";
 
 export default function Page() {
   const {
@@ -22,7 +28,7 @@ export default function Page() {
     mode: "onChange",
     defaultValues: {
       mainBackground: "pink",
-      mainLp: "luck",
+      mainLp: "headphone",
     },
   });
 
@@ -151,41 +157,41 @@ export default function Page() {
                     errorMessage={errors.mainLp?.message}
                   >
                     <div className="flex flex-row space-x-4 pb-10">
-                      <RoundRadioButton
+                      <BorderRadioButton
                         {...register("mainLp")}
-                        label="luck"
-                        isChecked={isLpDesign === "luck"}
-                        id="luck"
+                        label="headphone"
+                        isChecked={isLpDesign === "headphone"}
+                        id="headphone"
                         name="mainLp"
-                        value="luck"
-                        className="bg-custom_red"
+                        value="headphone"
+                        icons={headphone}
                       />
-                      <RoundRadioButton
+                      <BorderRadioButton
                         {...register("mainLp")}
-                        label="dragon"
-                        isChecked={isLpDesign === "dragon"}
-                        id="dragon"
+                        label="wt"
+                        isChecked={isLpDesign === "wtl"}
+                        id="wtl"
                         name="mainLp"
-                        value="dragon"
-                        className="bg-custom_blue"
+                        value="wtl"
+                        icons={wtl}
                       />
-                      <RoundRadioButton
+                      <BorderRadioButton
                         {...register("mainLp")}
-                        label="dny"
-                        isChecked={isLpDesign === "dny"}
-                        id="dny"
+                        label="high"
+                        isChecked={isLpDesign === "high"}
+                        id="high"
                         name="mainLp"
-                        value="dny"
-                        className="bg-custom_black"
+                        value="high"
+                        icons={high}
                       />
-                      <RoundRadioButton
+                      <BorderRadioButton
                         {...register("mainLp")}
-                        label="new_year"
-                        isChecked={isLpDesign === "new_year"}
-                        id="new_year"
+                        label="low"
+                        isChecked={isLpDesign === "low"}
+                        id="low"
                         name="mainLp"
-                        value="new_year"
-                        className="bg-custom_gold"
+                        value="low"
+                        icons={low}
                       />
                     </div>
                   </Inputlabel>

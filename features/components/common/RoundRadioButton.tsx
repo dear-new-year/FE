@@ -1,6 +1,8 @@
 import React from "react";
 import { InputHTMLAttributes, forwardRef } from "react";
 import { classNames } from "../../utils/classNames";
+import Image from "next/image";
+import selected from "../../assets/icons/selected.svg";
 
 interface RoundRadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -35,8 +37,8 @@ const RoundRadioButton = forwardRef<HTMLInputElement, RoundRadioButtonProps>(
               className="hidden"
             ></input>
             {isChecked && (
-              <img
-                src="/assets/icons/selected.svg"
+              <Image
+                src={selected}
                 alt="selected"
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10"
               />

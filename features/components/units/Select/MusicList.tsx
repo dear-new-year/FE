@@ -1,6 +1,12 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import axios from "axios";
 import SearchBar from "../SearchBar";
+import Image from "next/image";
+import emptyMusic from "@/assets/icons/empty_music.svg";
+import selectedMusic from "@/assets/icons/selected_music.svg";
+import unselectedMusic from "@/assets/icons/unselected_music.svg";
+import playButton from "@/assets/icons/play_button.svg";
+import stopButton from "@/assets/icons/stop.svg";
 
 interface MusicListProps {
   playListSelection: {
@@ -91,8 +97,8 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
         <div className="w-full h-80 overflow-y-scroll">
           {filteredPlayList.length === 0 ? (
             <div className="flex flex-col items-center justify-center w-full h-full gap-5 px-2">
-              <img
-                src="/assets/icons/empty_music.svg"
+              <Image
+                src={emptyMusic}
                 alt="empty-music"
                 className="w-20 h-20 "
               />
@@ -110,14 +116,14 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
                 onClick={() => handleMusicBoxClick(item.youtubeUrlId)}
               >
                 {selectedVideoId === item.youtubeUrlId ? (
-                  <img
-                    src="/assets/icons/selected_music.svg"
+                  <Image
+                    src={selectedMusic}
                     alt="selected-music"
                     className="w-4"
                   />
                 ) : (
-                  <img
-                    src="/assets/icons/unselected_music.svg"
+                  <Image
+                    src={unselectedMusic}
                     alt="unselected-music"
                     className="w-4"
                   />
@@ -192,8 +198,8 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
               className="w-8 h-8 text-white this-button mx-2"
               onClick={handlePlayButtonClick}
             >
-              <img
-                src="/assets/icons/play_button.svg"
+              <Image
+                src={playButton}
                 alt="play-button"
                 className="w-3"
               />
@@ -203,8 +209,8 @@ const MusicList = forwardRef<HTMLInputElement, MusicListProps>(
               className="text-white mr-4"
               onClick={() => setIsPlaying(false)}
             >
-              <img
-                src="/assets/icons/stop_button.svg"
+              <Image
+                src={stopButton}
                 alt="close"
                 className="w-3"
               />

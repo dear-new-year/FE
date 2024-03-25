@@ -11,12 +11,16 @@ import BackSelect from "@/components/units/Select/BackSelect";
 import MusicList from "@/components/units/Select/MusicList";
 import LetterWriting from "@/components/units/Select/LetterWriting";
 import CompleteAlbum from "@/components/units/CompleteAlbum";
+
 import {
   albumSelection,
   labelMap,
   letterSelection,
   phrasesSelection,
 } from "@/utils/data";
+import Image from "next/image";
+import left from "@/assets/icons/chevron_left.svg";
+import right from "@/assets/icons/chevron_right.svg";
 
 const backSelection = {
   colorful: <BackgroundColorful />,
@@ -91,17 +95,6 @@ export default function Page() {
   }> = (data) => {
     setSubmittedData(data);
     handleStepChange(step + 1);
-    data.editor = selectedOptions.editor;
-    data.phrases = selectedOptions.phrases;
-    data.back = selectedOptions.back;
-    data.music = selectedOptions.music;
-    data.letter = selectedOptions.letter;
-    data.to = selectedInput.to;
-    data.from = selectedInput.from;
-    data.musicInfo = playListSelection.find(
-      (item) => item.youtubeUrlId === selectedOptions.music
-    );
-
     console.log(data);
   };
 
@@ -123,11 +116,7 @@ export default function Page() {
           onClick={handlePrevious}
           className="flex flex-row items-center justify-between"
         >
-          <img
-            src="/assets/icons/chevron_left.svg"
-            alt="arrow-left"
-            className="mr-2"
-          />
+          <Image src={left} alt="arrow-left" className="mr-2" />
           이전
         </button>
         {step < 5 && (
@@ -136,11 +125,7 @@ export default function Page() {
             onClick={() => handleStepChange(step + 1)}
           >
             다음
-            <img
-              src="/assets/icons/chevron_right.svg"
-              alt="arrow-right"
-              className="ml-2"
-            />
+            <Image src={right} alt="arrow-right" className="ml-2" />
           </button>
         )}
         {step === 5 && (
